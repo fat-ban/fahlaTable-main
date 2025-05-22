@@ -15,6 +15,11 @@ function setTableOrientation(orientation) {
   generateTable(); // Regenerate table with new orientation
 }
 
+/**
+ * Displays a success toast notification with the given message.
+ * @param {string} message The message to be displayed in the toast.
+ */
+
 function showSuccessToast(message) {
   Toastify({
     text: message,
@@ -39,6 +44,35 @@ function showErrorToast(message) {
   }).showToast();
 }
 
+/**
+ * Resets all user inputs and interface elements to their default state.
+ * Clears the table data, input fields, logo, and hides download buttons.
+ * Displays a success message upon completion.
+ */
+
+
+function resetAll() {
+  // Clear all input fields
+  document.getElementById("headerTitle").value = "";
+  document.getElementById("headerDesc").value = "";
+  document.getElementById("columnsInput").value = "";
+  document.getElementById("dataInput").value = "";
+  document.getElementById("footerText").value = "";
+  
+  // Reset logo
+  document.getElementById("logoUpload").value = "";
+  document.getElementById("logoPreview").src = "";
+  logoData = "";
+  
+  // Clear the table container
+  document.getElementById("tableContainer").innerHTML = "";
+  
+  // Hide download buttons
+  document.getElementById("downloadButtons").style.display = "none";
+  
+  // Show success message
+  showSuccessToast("تم مسح جميع البيانات بنجاح");
+}
 function generateTable() {
   try {
     // Get and trim input values
