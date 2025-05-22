@@ -62,9 +62,13 @@
 
     <label for="columnsInput">أسماء الأعمدة:</label>
     <input type="text" id="columnsInput" placeholder="الاسم, اللقب...">
-
-    <label for="logoUpload">تحميل الشعار:</label>
-    <input type="file" id="logoUpload" accept="image/*" >
+ 
+    <label for="logoUpload">تحميل الشعار:</label>   
+    <div class="file-input-wrapper">
+    <button type="button" class="file-upload-btn" onclick="document.getElementById('logoUpload').click()">اختر صورة</button>
+    
+    <input type="file" id="logoUpload" accept="image/*" style="display: none;">
+  </div>
     <img id="logoPreview" src="" alt=""/>
 
     <label for="dataInput">(سطر لكل عنصر، مثال: سيرين, هند):</label>
@@ -82,7 +86,7 @@
       <!--button-- onclick="generateTable()">✨ إنشاء الجدول</!--button-->
       <button onclick="saveAsJSON()" class="btn">💾 حفظ الملف</button>
       <button onclick="resetAll()" class="btn-danger">🗑️ مسح البيانات</button>
-      <button class="btn"> <input type="file" id="jsonUpload" accept="application/json" onchange="loadFromJSON(this)" name="حمل الملف"></button>
+      <button class="btn" onclick="loadFromJSON(this)"> 📂 جلب الملف</button>
 
     </div>
 
