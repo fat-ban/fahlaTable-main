@@ -365,6 +365,15 @@ function toggleColorOptions() {
   const options = document.getElementById('colorOptions');
   options.style.display = options.style.display === 'block' ? 'none' : 'block';
 }
+/****** */
+function handleHomeClick() {
+  // Add any home page specific logic here
+  console.log("Home clicked");
+  // Close mobile menu if open
+  document.getElementById('navLinks').classList.remove('active');
+}
+/***** */
+
 
 // Close menus when clicking outside
 document.addEventListener('click', function(event) {
