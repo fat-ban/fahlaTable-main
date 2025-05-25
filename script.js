@@ -28,7 +28,7 @@ function showSuccessToast(message) {
     gravity: "top",
     position: "center",
     backgroundColor: "#4CAF50",
-    stopOnFocus: true
+    stopOnFocus: true,
   }).showToast();
 }
 
@@ -40,7 +40,7 @@ function showErrorToast(message) {
     gravity: "top",
     position: "center",
     backgroundColor: "#f44336",
-    stopOnFocus: true
+    stopOnFocus: true,
   }).showToast();
 }
 
@@ -50,7 +50,6 @@ function showErrorToast(message) {
  * Displays a success message upon completion.
  */
 
-
 function resetAll() {
   // Clear all input fields
   document.getElementById("headerTitle").value = "";
@@ -58,18 +57,18 @@ function resetAll() {
   document.getElementById("columnsInput").value = "";
   document.getElementById("dataInput").value = "";
   document.getElementById("footerText").value = "";
-  
+
   // Reset logo
   document.getElementById("logoUpload").value = "";
   document.getElementById("logoPreview").src = "";
   logoData = "";
-  
+
   // Clear the table container
   document.getElementById("tableContainer").innerHTML = "";
-  
+
   // Hide download buttons
   document.getElementById("downloadButtons").style.display = "none";
-  
+
   // Show success message
   showSuccessToast("تم مسح جميع البيانات بنجاح");
 }
@@ -78,7 +77,7 @@ function generateTable() {
     // Get and trim input values
     const columnsInput = document.getElementById("columnsInput").value.trim();
     const dataInput = document.getElementById("dataInput").value.trim();
-    
+
     console.log("Columns input:", columnsInput);
     console.log("Data input:", dataInput);
 
@@ -91,8 +90,8 @@ function generateTable() {
 
     // Process columns and data lines
     const columns = columnsInput.split(",").map((c) => c.trim());
-    const dataLines = dataInput.split("\n").map(line => line.trim());
-    
+    const dataLines = dataInput.split("\n").map((line) => line.trim());
+
     console.log("Columns:", columns);
     console.log("Data lines:", dataLines);
 
@@ -142,7 +141,7 @@ function generateTable() {
       html += "</tr></thead><tbody>";
 
       dataLines.forEach((line) => {
-        const parts = line.split(",").map(part => part.trim());
+        const parts = line.split(",").map((part) => part.trim());
         html += "<tr>";
         for (let i = 0; i < columns.length; i++) {
           html += `<td contenteditable="true">${parts[i] || ""}</td>`;
@@ -154,19 +153,19 @@ function generateTable() {
     } else {
       // Vertical table
       html += "<table>";
-      
+
       for (let i = 0; i < columns.length; i++) {
         html += "<tr>";
         html += `<th>${columns[i]}</th>`;
-        
+
         dataLines.forEach((line) => {
-          const parts = line.split(",").map(part => part.trim());
+          const parts = line.split(",").map((part) => part.trim());
           html += `<td contenteditable="true">${parts[i] || ""}</td>`;
         });
-        
+
         html += "</tr>";
       }
-      
+
       html += "</table>";
     }
 
@@ -174,12 +173,12 @@ function generateTable() {
     html += "</div>";
 
     tableContainer.innerHTML = html;
-    
+
     // Show download buttons after successful table generation
     document.getElementById("downloadButtons").style.display = "flex";
 
     showSuccessToast("تم إنشاء الجدول بنجاح!");
-  } catch(error) {
+  } catch (error) {
     showErrorToast("حدث خطأ: " + error.message);
     console.error("Error generating table:", error);
     document.getElementById("downloadButtons").style.display = "none";
@@ -188,10 +187,10 @@ function generateTable() {
 
 // Rest of your functions remain the same...
 function saveAsJSON() {
-   try {
+  try {
     const columnsInput = document.getElementById("columnsInput").value.trim();
     const dataInput = document.getElementById("dataInput").value.trim();
-    
+
     console.log("Columns input:", columnsInput);
     console.log("Data input:", dataInput);
 
@@ -201,124 +200,132 @@ function saveAsJSON() {
       return;
     }
     const data = {
-    columns: document.getElementById("columnsInput").value,
-    data: document.getElementById("dataInput").value,
-    headerTitle: document.getElementById("headerTitle").value,
-    headerDesc: document.getElementById("headerDesc").value,
-    footerText: document.getElementById("footerText").value,
-    logoData: logoData,
-    orientation: tableOrientation
-  };
-  const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "table-data.json";
-  link.click();
-    
+      columns: document.getElementById("columnsInput").value,
+      data: document.getElementById("dataInput").value,
+      headerTitle: document.getElementById("headerTitle").value,
+      headerDesc: document.getElementById("headerDesc").value,
+      footerText: document.getElementById("footerText").value,
+      logoData: logoData,
+      orientation: tableOrientation,
+    };
+    const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "table-data.json";
+    link.click();
+
     showSuccessToast("تم حفظ الجدول بنجاح!");
   } catch (error) {
-     showErrorToast("هناك خطاء: " + error.message);
+    showErrorToast("هناك خطاء: " + error.message);
   }
 }
 
 function loadFromJSON(input) {
   try {
-   const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    const content = JSON.parse(e.target.result);
-    document.getElementById("columnsInput").value = content.columns;
-    document.getElementById("dataInput").value = content.data;
-    document.getElementById("headerTitle").value = content.headerTitle;
-    document.getElementById("headerDesc").value = content.headerDesc;
-    document.getElementById("footerText").value = content.footerText;
-    logoData = content.logoData;
-    tableOrientation = content.orientation || "horizontal";
-    document.getElementById("logoPreview").src = logoData;
-    generateTable();
-  };
-  reader.readAsText(file);
-    
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const content = JSON.parse(e.target.result);
+      document.getElementById("columnsInput").value = content.columns;
+      document.getElementById("dataInput").value = content.data;
+      document.getElementById("headerTitle").value = content.headerTitle;
+      document.getElementById("headerDesc").value = content.headerDesc;
+      document.getElementById("footerText").value = content.footerText;
+      logoData = content.logoData;
+      tableOrientation = content.orientation || "horizontal";
+      document.getElementById("logoPreview").src = logoData;
+      generateTable();
+    };
+    reader.readAsText(file);
+
     showSuccessToast("تم تحميل الجدول بنجاح!");
   } catch (error) {
-     showErrorToast("هناك خطاء: " + error.message);
+    showErrorToast("هناك خطاء: " + error.message);
   }
 }
 
 async function downloadPDF() {
   try {
-    
-  
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  const element = document.getElementById("printContent");
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const element = document.getElementById("printContent");
 
-  if (!element) {
-    showErrorToast("لا يوجد جدول لتحميله. يرجى إنشاء الجدول أولاً.");
-    return;
-  }
-  await html2canvas(element).then((canvas) => {
-    const imgData = canvas.toDataURL("image/png");
-    const imgProps = doc.getImageProperties(imgData);
-    const pdfWidth = doc.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-    doc.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-    doc.save("tableau.pdf");
-  });
+    if (!element) {
+      showErrorToast("لا يوجد جدول لتحميله. يرجى إنشاء الجدول أولاً.");
+      return;
+    }
+    await html2canvas(element).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      doc.save("tableau.pdf");
+    });
 
-  showSuccessToast("تم حفظ الجدول PDF بنجاح!");
-    } catch (error) {
-     showErrorToast("هناك خطاء: " + error.message);
+    showSuccessToast("تم حفظ الجدول PDF بنجاح!");
+  } catch (error) {
+    showErrorToast("هناك خطاء: " + error.message);
   }
 }
 
 function downloadPNG() {
   try {
-    
-  const element = document.getElementById("printContent");
-  // Check if element exists
+    const element = document.getElementById("printContent");
+    // Check if element exists
     if (!element) {
       showErrorToast("لا يوجد جدول لتحميله. يرجى إنشاء الجدول أولاً.");
       return;
     }
-  html2canvas(element).then((canvas) => {
-    const link = document.createElement("a");
-    link.download = "table.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-  });
+    html2canvas(element).then((canvas) => {
+      const link = document.createElement("a");
+      link.download = "table.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
     showSuccessToast("تم حفظ الجدول PNG بنجاح!");
-   } catch (error) {
-     showErrorToast("هناك خطاء: " + error.message);
+  } catch (error) {
+    showErrorToast("هناك خطاء: " + error.message);
   }
 }
 function downloadWord() {
   try {
-    
-  
-  const content = document.getElementById("printContent").innerHTML;
- 
-  const blob = new Blob(
-    [
-      '<html><head><meta charset="UTF-8"></head><body>' +
-        content +
-        "</body></html>",
-    ],
-    {
-      type: "application/msword",
-    }
-  );
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "tableau.doc";
-  link.click();
+    const content = document.getElementById("printContent").innerHTML;
 
-  showSuccessToast("تم حفظ الجدول WORD بنجاح!");
-    } catch (error) {
-     showErrorToast("هناك خطاء: " + error.message);
+    const blob = new Blob(
+      [
+        '<html><head><meta charset="UTF-8"></head><body>' +
+          content +
+          "</body></html>",
+      ],
+      {
+        type: "application/msword",
+      }
+    );
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "tableau.doc";
+    link.click();
+
+    showSuccessToast("تم حفظ الجدول WORD بنجاح!");
+  } catch (error) {
+    showErrorToast("هناك خطاء: " + error.message);
   }
 }
+// Color selector functionality
+function toggleColorOptions() {
+  const options = document.getElementById("colorOptions");
+  options.style.display = options.style.display === "block" ? "none" : "block";
+}
+
+// Close color options when clicking outside
+document.addEventListener("click", function (event) {
+  const colorSelector = document.querySelector(".color-selector");
+  if (!colorSelector.contains(event.target)) {
+    document.getElementById("colorOptions").style.display = "none";
+  }
+});
 
 function changeTheme(theme) {
   const root = document.documentElement;
@@ -360,41 +367,48 @@ function changeTheme(theme) {
   for (let key in selected) {
     root.style.setProperty(key, selected[key]);
   }
+
+  // Update the color preview
+  const preview = document.getElementById("currentColorPreview");
+  preview.className = "color-preview color-" + theme;
+
+  // Close the options
+  document.getElementById("colorOptions").style.display = "none";
 }
 
 // Modal functionality
 function showAboutModal() {
-  const modal = document.getElementById('aboutModal');
-  modal.style.display = 'block';
+  const modal = document.getElementById("aboutModal");
+  modal.style.display = "block";
 }
 
 // Initialize modal functionality when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
   // Close modal when clicking the X button
-  const closeButton = document.querySelector('.close');
+  const closeButton = document.querySelector(".close");
   if (closeButton) {
-    closeButton.addEventListener('click', function() {
-      const modal = document.getElementById('aboutModal');
+    closeButton.addEventListener("click", function () {
+      const modal = document.getElementById("aboutModal");
       if (modal) {
-        modal.style.display = 'none';
+        modal.style.display = "none";
       }
     });
   }
 
   // Close modal when clicking outside of it
-  window.addEventListener('click', function(event) {
-    const modal = document.getElementById('aboutModal');
+  window.addEventListener("click", function (event) {
+    const modal = document.getElementById("aboutModal");
     if (event.target === modal) {
-      modal.style.display = 'none';
+      modal.style.display = "none";
     }
   });
 
   // Close modal when pressing Escape key
-  document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-      const modal = document.getElementById('aboutModal');
-      if (modal && modal.style.display === 'block') {
-        modal.style.display = 'none';
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      const modal = document.getElementById("aboutModal");
+      if (modal && modal.style.display === "block") {
+        modal.style.display = "none";
       }
     }
   });
