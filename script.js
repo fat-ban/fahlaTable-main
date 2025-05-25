@@ -221,28 +221,66 @@ function saveAsJSON() {
 }
 
 function loadFromJSON(input) {
-  try {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const content = JSON.parse(e.target.result);
-      document.getElementById("columnsInput").value = content.columns;
-      document.getElementById("dataInput").value = content.data;
-      document.getElementById("headerTitle").value = content.headerTitle;
-      document.getElementById("headerDesc").value = content.headerDesc;
-      document.getElementById("footerText").value = content.footerText;
-      logoData = content.logoData;
-      tableOrientation = content.orientation || "horizontal";
-      document.getElementById("logoPreview").src = logoData;
-      generateTable();
-    };
-    reader.readAsText(file);
-
-    showSuccessToast("تم تحميل الجدول بنجاح!");
-  } catch (error) {
-    showErrorToast("هناك خطاء: " + error.message);
+  // Create file input element if not passed
+  if (!input) {
+    input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = () => loadFromJSON(input);
+    input.click();
+    return;
   }
+
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  
+  reader.onload = function(e) {
+    try {
+      const content = JSON.parse(e.target.result);
+      
+      // Validate JSON structure
+      if (!content || typeof content !== 'object') {
+        throw new Error('الملف غير صالح');
+      }
+
+      // Set values with fallbacks for missing properties
+      document.getElementById("columnsInput").value = content.columns || '';
+      document.getElementById("dataInput").value = content.data || '';
+      document.getElementById("headerTitle").value = content.headerTitle || '';
+      document.getElementById("headerDesc").value = content.headerDesc || '';
+      document.getElementById("footerText").value = content.footerText || '';
+      
+      // Handle logo data
+      if (content.logoData) {
+        logoData = content.logoData;
+        const logoPreview = document.getElementById("logoPreview");
+        logoPreview.src = logoData;
+        logoPreview.style.display = 'block';
+      }
+      
+      // Set orientation with default
+      tableOrientation = content.orientation || "horizontal";
+      
+      // Generate table if there's data
+      if (content.columns && content.data) {
+        generateTable();
+      }
+      
+      showSuccessToast("تم تحميل الجدول بنجاح!");
+    } catch (error) {
+      showErrorToast("خطأ في تحميل الملف: " + error.message);
+      console.error('Error loading JSON:', error);
+    }
+  };
+
+  reader.onerror = function() {
+    showErrorToast("حدث خطأ أثناء قراءة الملف");
+    console.error('FileReader error:', reader.error);
+  };
+
+  reader.readAsText(file);
 }
 
 async function downloadPDF() {
