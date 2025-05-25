@@ -122,6 +122,27 @@ input[type="file"] {
 
   
 }
+.title-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.title-main{
+  flex:4;
+}
+.label-color{
+/*width: 10%;*/
+}
+.select-color {
+  width: 100%;
+  flex:1;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: var(--background-color);
+  font-size: 16px;
+  margin-bottom: 10px;
+}
 
 .file-input-wrapper {
   display: flex;
