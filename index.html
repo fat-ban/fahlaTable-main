@@ -33,49 +33,54 @@
       <!----->
       <!-- Navigation Bar -->
       <nav class="navbar">
-        <div class="navbar-container">
-          <a href="#" class="logo">
-            <img
-              src="img/android-chrome-512x512.png"
-              alt="fahlaTable"
-              width="50"
-              class="logo-icon"
-            />
-            <span>مولّد الجداول</span>
-          </a>
+  <div class="navbar-container">
+    <a href="#" class="logo">
+      <img
+        src="img/android-chrome-512x512.png"
+        alt="fahlaTable"
+        width="50"
+        class="logo-icon"
+      />
+      <span>مولّد الجداول</span>
+    </a>
 
-          <ul class="nav-links">
-            <li><a href="#">الرئيسية</a></li>
-      <!-- Color Selector in Navbar -->
-            <li class="color-selector">
-              <div class="color-selector-btn" onclick="toggleColorOptions()">
-                <span class="icon">🎨</span>
-                <div class="color-preview color-rose" id="currentColorPreview"></div>
-              </div>
-              <div class="color-options" id="colorOptions">
-                <div class="color-option" onclick="changeTheme('rose')">
-                  <div class="color-circle color-rose"></div>
-                  <span>وردي</span>
-                </div>
-                <div class="color-option" onclick="changeTheme('blue')">
-                  <div class="color-circle color-blue"></div>
-                  <span>أزرق</span>
-                </div>
-                <div class="color-option" onclick="changeTheme('purple')">
-                  <div class="color-circle color-purple"></div>
-                  <span>بنفسجي</span>
-                </div>
-                <div class="color-option" onclick="changeTheme('green')">
-                  <div class="color-circle color-green"></div>
-                  <span>أخضر</span>
-                </div>
-              </div>
-            </li>
-            <!--------->
-            <li><a href="#" onclick="showAboutModal()">حول التطبيق</a></li>
-          </ul>
+    <!-- Mobile menu button -->
+    <button class="mobile-menu-button" onclick="toggleMobileMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#">الرئيسية</a></li>
+      <li class="color-selector">
+        <div class="color-selector-btn" onclick="toggleColorOptions()">
+          <span class="icon">🎨</span>
+          <div class="color-preview color-rose" id="currentColorPreview"></div>
         </div>
-      </nav>
+        <div class="color-options" id="colorOptions">
+          <div class="color-option" onclick="changeTheme('rose')">
+            <div class="color-circle color-rose"></div>
+            <span>وردي</span>
+          </div>
+          <div class="color-option" onclick="changeTheme('blue')">
+            <div class="color-circle color-blue"></div>
+            <span>أزرق</span>
+          </div>
+          <div class="color-option" onclick="changeTheme('purple')">
+            <div class="color-circle color-purple"></div>
+            <span>بنفسجي</span>
+          </div>
+          <div class="color-option" onclick="changeTheme('green')">
+            <div class="color-circle color-green"></div>
+            <span>أخضر</span>
+          </div>
+        </div>
+      </li>
+      <li><a href="#" onclick="showAboutModal()">حول التطبيق</a></li>
+    </ul>
+  </div>
+</nav>
       <!------>
       <div class="section-container">
         <div class="title-container">

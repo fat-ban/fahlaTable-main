@@ -351,17 +351,33 @@ function downloadWord() {
     showErrorToast("هناك خطاء: " + error.message);
   }
 }
+// Mobile menu toggle functionality
+function toggleMobileMenu() {
+  const navLinks = document.getElementById('navLinks');
+  navLinks.classList.toggle('active');
+  
+  // Close color options when mobile menu opens
+  document.getElementById('colorOptions').style.display = 'none';
+}
 // Color selector functionality
+
 function toggleColorOptions() {
-  const options = document.getElementById("colorOptions");
-  options.style.display = options.style.display === "block" ? "none" : "block";
+  const options = document.getElementById('colorOptions');
+  options.style.display = options.style.display === 'block' ? 'none' : 'block';
 }
 
-// Close color options when clicking outside
-document.addEventListener("click", function (event) {
-  const colorSelector = document.querySelector(".color-selector");
+// Close menus when clicking outside
+document.addEventListener('click', function(event) {
+  const navLinks = document.getElementById('navLinks');
+  const colorSelector = document.querySelector('.color-selector');
+  const mobileButton = document.querySelector('.mobile-menu-button');
+  
+  if (!event.target.closest('.nav-links') && !event.target.closest('.mobile-menu-button')) {
+    navLinks.classList.remove('active');
+  }
+  
   if (!colorSelector.contains(event.target)) {
-    document.getElementById("colorOptions").style.display = "none";
+    document.getElementById('colorOptions').style.display = 'none';
   }
 });
 
